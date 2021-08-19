@@ -21,7 +21,11 @@ showChat.addEventListener("click", () => {
 
 const user = prompt("Enter your name");
 const peers = {}
-var peer = new Peer();
+var peer = new Peer(undefined, {
+  path: "/peerjs",
+  host: "/",
+  port: "443",
+});
 
 let myVideoStream;
 navigator.mediaDevices
@@ -52,10 +56,9 @@ const connectToNewUser = (userId, stream) => {
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream);
   });
-  call.on('close', ()=>{
-    video.remove()
-})
-
+  call.on("close", ()=>{
+      video.remove()
+  })
   peers[userId] = call
 };
 
